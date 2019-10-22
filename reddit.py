@@ -8,6 +8,12 @@ reddit = praw.Reddit(client_id=client_id,
 
 def get_headlines(keyword):
     headlines = set()
-    for submission in reddit.subreddit(keyword).new(limit=20):
+    for submission in reddit.subreddit(keyword).hot(limit=200):
         headlines.add(submission.title)
     return headlines
+
+def test():
+    for submission in reddit.subreddit("bitcoin").hot(limit=1):
+        for comment in submission.comments:
+            print(comment.body)
+# test()
