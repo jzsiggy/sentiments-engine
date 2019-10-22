@@ -1,4 +1,4 @@
-from analyze import compare, get_negative_headlines, get_positive_headlines
+from analyze import compare, get_negative_headlines, get_positive_headlines, get_word_frequency
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import pandas as pd
@@ -15,7 +15,18 @@ def positive():
     keyword = request.args['keyword']
     return jsonify(get_positive_headlines(keyword))
 
+@app.route('/reddit/positive/word-frequency')
+def positive_word_frequency():
+    keyword = request.args['keyword']
+    return jsonify(get_word_frequency(get_positive_headlines(keyword)))
+
+
 @app.route('/reddit/negative')
 def negative():
     keyword = request.args['keyword']
     return jsonify(get_negative_headlines(keyword))
+
+@app.route('/reddit/negative/word-frequency')
+def negative_word_frequency():
+    keyword = request.args['keyword']
+    return jsonify(get_word_frequency(get_negative_headlines(keyword)))
