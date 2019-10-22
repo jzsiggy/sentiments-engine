@@ -8,7 +8,7 @@ def get_positive_headlines(keyword):
     index = 0
     for headline in get_headlines(keyword):
         sentiment = get_avg_sentiment(headline)
-        if sentiment > 0:
+        if sentiment > 0.4:
             positive_headlines[index] = {}
             positive_headlines[index]["headline"] = headline
             positive_headlines[index]["polarity"] = sentiment
@@ -20,24 +20,38 @@ def get_negative_headlines(keyword):
     index = 0
     for headline in get_headlines(keyword):
         sentiment = get_avg_sentiment(headline)
-        if sentiment < 0:
+        if sentiment < -0.4:
             negative_headlines[index] = {}
             negative_headlines[index]["headline"] = headline
             negative_headlines[index]["polarity"] = sentiment
             index += 1
     return negative_headlines
 
+# def get_word_frequency(headlines):
+#     words = []
+#     for index in headlines:
+#         phrase = headlines[index]['headline']
+#         blob = TextBlob(phrase)
+#         for word_tuple in blob.tags:
+#             # if word_tuple[1] == "JJ":
+#                 words.append(word_tuple[0])
+#             # words.append(word)
+#     words_series = pd.Series(words)
+#     return dict(words_series.value_counts(True))
+
 def get_word_frequency(headlines):
-    words = []
+    words = {}
     for index in headlines:
         phrase = headlines[index]['headline']
         blob = TextBlob(phrase)
         for word_tuple in blob.tags:
-            if word_tuple[1] == "JJ":
-                words.append(word_tuple[0])
+            # if word_tuple[1] == "JJ":
+            if word_tuple[0] in words:
+                words[word_tuple[0]] += 1
+            else:
+                words[word_tuple[0]] = 1
             # words.append(word)
-    words_series = pd.Series(words)
-    return words_series.value_counts(True)
+    return words
 
 def compare(keyword):
     num_bad = len(get_negative_headlines(keyword))
