@@ -1,0 +1,4 @@
+.*
+!.gitignore
+text-env/
+__pycache__

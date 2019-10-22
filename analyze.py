@@ -4,26 +4,33 @@ from textblob import TextBlob
 import pandas as pd
 
 def get_positive_headlines(keyword):
-    positive_headlines = pd.DataFrame(columns=['headline', 'compound'])
+    positive_headlines = {}
+    index = 0
     for headline in get_headlines(keyword):
         sentiment = get_avg_sentiment(headline)
         if sentiment > 0:
-            positive_headlines = positive_headlines.append({"headline": headline, "compound": sentiment}, ignore_index=True)
+            positive_headlines[index] = {}
+            positive_headlines[index]["headline"] = headline
+            positive_headlines[index]["polarity"] = sentiment
+            index += 1
     return positive_headlines
 
 def get_negative_headlines(keyword):
-    negative_headlines = pd.DataFrame(columns=['headline', 'compound'])
+    negative_headlines = {}
+    index = 0
     for headline in get_headlines(keyword):
         sentiment = get_avg_sentiment(headline)
         if sentiment < 0:
-            negative_headlines = negative_headlines.append({"headline": headline, "compound": sentiment}, ignore_index=True)
+            negative_headlines[index] = {}
+            negative_headlines[index]["headline"] = headline
+            negative_headlines[index]["polarity"] = sentiment
+            index += 1
     return negative_headlines
 
-def get_word_frequency(keyword):
+def get_word_frequency(headlines):
     words = []
-    headlines = get_negative_headlines(keyword)
-    for phrase in headlines.headline:
-        # print(phrase)
+    for index in headlines:
+        phrase = headlines[index]['headline']
         blob = TextBlob(phrase)
         for word_tuple in blob.tags:
             if word_tuple[1] == "JJ":
@@ -37,5 +44,4 @@ def compare(keyword):
     num_pos = len(get_positive_headlines(keyword))
     return(str(num_pos - num_bad))
 
-# print(get_word_frequency())
-# compare()
+# print(get_word_frequency(get_positive_headlines("btc")))
