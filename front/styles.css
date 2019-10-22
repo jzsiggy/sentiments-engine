@@ -1,0 +1,49 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.form {
+    display: flex;
+    align-items: center;
+}
+
+#search-btn {
+    height: 100%;
+    width: 50px;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+
+.responses {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    height: 500px;
+}
+
+.positive {
+    width: 40%;
+}
+
+.negative {
+    width: 40%;
+}
+
+.positive-headlines {
+    height: 100%;
+    background: #7179d5;
+}
+
+.negative-headlines {
+    height: 100%;
+    background: rgb(186, 186, 224);
+}
+
+.responses > div > div{
+    overflow: scroll;
+}
