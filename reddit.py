@@ -1,8 +1,9 @@
+from config import client_id, client_secret, user_agent
 import praw
 
-reddit = praw.Reddit(client_id='_u0PZRm230__1g',
-                     client_secret='gXtnAnwhUPz8JFaosTuYKqcYW8w',
-                     user_agent='ajl000')
+reddit = praw.Reddit(client_id=client_id,
+                     client_secret=client_secret,
+                     user_agent=user_agent)
 
 
 def get_headlines(keyword):

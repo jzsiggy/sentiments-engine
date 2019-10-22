@@ -1,4 +1,5 @@
 .*
 !.gitignore
+config.py
 text-env/
 __pycache__
