@@ -9,7 +9,16 @@ def nyt_article_search(keyword):
     response = json.loads(response.text)
     results = response["response"]
 
+    payload = {}
+    index = 0
     for article in results["docs"]:
-        print(article["headline"]["print_headline"])
+        payload[index] = {
+            "title" : article["headline"]["print_headline"],
+            "url" : article["web_url"],
+            "key_words" : [keyword["value"] for keyword in article["keywords"]]
+        }
 
-nyt_article_search("bitcoin")
+        index+=1
+    return payload
+
+print(nyt_article_search("bitcoin"))
