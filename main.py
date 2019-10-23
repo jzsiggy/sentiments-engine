@@ -1,4 +1,4 @@
-from analyze import compare, get_negative_headlines, get_positive_headlines, get_word_frequency
+from analyze import analyze_reddit_headlines, analyze_newYorkTimes_headlines
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import pandas as pd
@@ -10,23 +10,12 @@ CORS(app)
 def hello_world():
     return "Home"
 
-@app.route('/reddit/positive')
-def positive():
+@app.route('/reddit')
+def reddit():
     keyword = request.args['keyword']
-    return jsonify(get_positive_headlines(keyword))
+    return jsonify(analyze_reddit_headlines(keyword))
 
-@app.route('/reddit/positive/word-frequency')
-def positive_word_frequency():
+@app.route('/nyt')
+def nyt():
     keyword = request.args['keyword']
-    return jsonify(get_word_frequency(get_positive_headlines(keyword)))
-
-
-@app.route('/reddit/negative')
-def negative():
-    keyword = request.args['keyword']
-    return jsonify(get_negative_headlines(keyword))
-
-@app.route('/reddit/negative/word-frequency')
-def negative_word_frequency():
-    keyword = request.args['keyword']
-    return jsonify(get_word_frequency(get_negative_headlines(keyword)))
+    return jsonify(analyze_newYorkTimes_headlines(keyword))
