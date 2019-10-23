@@ -1,8 +1,9 @@
 import json
 import requests
+from config import nyt_key
 
 def nyt_article_search(keyword):
-    url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q={}&api-key=pJ0gt0GDWxElOgFrhJ43gQq6sc2JLT8p".format(keyword)
+    url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q={0}&api-key={1}".format(keyword, nyt_key)
 
     response = requests.get(url)
     response = json.loads(response.text)
