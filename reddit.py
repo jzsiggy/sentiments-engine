@@ -6,7 +6,7 @@ reddit = praw.Reddit(client_id=client_id,
                      user_agent=user_agent)
 
 
-def get_headlines(keyword):
+def get_reddit_headlines(keyword):
     headlines = set()
     for submission in reddit.subreddit(keyword).hot(limit=200):
         headlines.add(submission.title)

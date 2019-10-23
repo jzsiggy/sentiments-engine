@@ -6,7 +6,7 @@ import pandas as pd
 def get_positive_headlines(keyword):
     positive_headlines = {}
     index = 0
-    for headline in get_headlines(keyword):
+    for headline in get_reddit_headlines(keyword):
         sentiment = get_avg_sentiment(headline)
         if sentiment > 0.4:
             positive_headlines[index] = {}
@@ -18,7 +18,7 @@ def get_positive_headlines(keyword):
 def get_negative_headlines(keyword):
     negative_headlines = {}
     index = 0
-    for headline in get_headlines(keyword):
+    for headline in get_reddit_headlines(keyword):
         sentiment = get_avg_sentiment(headline)
         if sentiment < -0.4:
             negative_headlines[index] = {}
