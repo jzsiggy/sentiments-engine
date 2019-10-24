@@ -19,31 +19,9 @@ body {
     border-radius: 3px;
 }
 
-.responses {
+.results {
     margin-top: 20px;
     display: flex;
     justify-content: space-evenly;
     height: 500px;
-}
-
-.positive {
-    width: 40%;
-}
-
-.negative {
-    width: 40%;
-}
-
-.positive-headlines {
-    height: 100%;
-    background: #7179d5;
-}
-
-.negative-headlines {
-    height: 100%;
-    background: rgb(186, 186, 224);
-}
-
-.responses > div > div{
-    overflow: scroll;
 }

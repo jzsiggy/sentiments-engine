@@ -1,44 +1,54 @@
+async function getFeedFromSource(endpoint, keyword) {
+    const response = await fetch(`${endpoint}?keyword=${keyword}`, {});
+    const json = await response.json();
+    return json;
+}
+
+async function getFullFeed (keyword) {
+    const sources = [
+        "http://127.0.0.1:5000/reddit",
+        "http://127.0.0.1:5000/guardian",
+        "http://127.0.0.1:5000/nyt",
+        // "http://127.0.0.1:5000/crypto-panic"
+    ]
+    
+    const feed = []
+
+    sources.forEach(async function(source) {
+        await getFeedFromSource(source, keyword)
+        .then((redditFeed) => {
+            for (entry in redditFeed) {
+                feed.push(redditFeed[entry]);
+            };
+        });
+    })
+    return feed
+}
+
 removeAllChildren = (div) => {
     while (div.firstChild) {
         div.removeChild(div.firstChild);
     };
 };
 
-parseRedditInfo = (keyword) => {
-    let positiveDiv = document.querySelector(".positive-headlines")
-    let negativeDiv = document.querySelector(".negative-headlines")
-    let request = new XMLHttpRequest
-
-    request.open('GET', `http://127.0.0.1:5000/guardian?keyword=${keyword}`, true);
-    request.onload = function () {
-        let data = JSON.parse(this.response);
-        console.log(data);
-        for (index in data) {
-            let link = document.createElement("a");
-            link.setAttribute("href", data[index]["url"])
-            let header = document.createElement("h4");
-            header.innerText = data[index]["title"];
-            link.appendChild(header);
-            if (data[index]["polarity"] > 0.4) {  
-                positiveDiv.appendChild(link);
-            } else if (data[index]["polarity"] < -0.4) {
-                negativeDiv.appendChild(link);
-            };
-        };
-    };
-    
-    request.send();
-};
-
-
 const searchBtn = document.querySelector("#search-btn");
 
 searchBtn.addEventListener("click", () => {
-    document.querySelectorAll(".responses > div > div").forEach(div => {
-        removeAllChildren(div);
-    });
-    
     const input = document.querySelector("#search");
     console.log(input.value);
-    parseRedditInfo(input.value);
+    getFullFeed(input.value)
+    .then(data => {
+        populate(data);
+    });
 });
+
+let populate = (data) => {
+    const resultsDiv = document.querySelector(".results")
+    removeAllChildren(resultsDiv);
+    console.log(data);
+    for (entry in data) {
+        console.log(data[entry])
+        let header = document.createElement("h1").innerText = entry.title;
+        resultsDiv.appendChild(header);
+    };
+};
