@@ -12,7 +12,7 @@ def get_reddit_headlines(keyword):
     for submission in reddit.subreddit(keyword).hot(limit=10):
         headlines["{}".format(index)] = {
             "title" : submission.title,
-            "comments" : [comment.body for comment in submission.comments],
+            # "comments" : [comment.body for comment in submission.comments],
             "url" : submission.url
         }
         index+=1
