@@ -1,9 +1,9 @@
 from sentiment import *
-from reddit import *
-from nyt import nyt_article_search
-from crypto_panic import get_cryptopanic_latest
-from crypto_control import get_crypto_control_top_news
-from guardian import guardian_search
+
+from news import nyt_article_search, guardian_search, get_reddit_headlines
+
+from crypto import get_crypto_control_top_news, get_cryptopanic_latest
+
 from textblob import TextBlob
 import pandas as pd
 

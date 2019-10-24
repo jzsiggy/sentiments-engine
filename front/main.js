@@ -9,7 +9,7 @@ parseRedditInfo = (keyword) => {
     let negativeDiv = document.querySelector(".negative-headlines")
     let request = new XMLHttpRequest
 
-    request.open('GET', `http://127.0.0.1:5000/reddit?keyword=${keyword}`, true);
+    request.open('GET', `http://127.0.0.1:5000/guardian?keyword=${keyword}`, true);
     request.onload = function () {
         let data = JSON.parse(this.response);
         console.log(data);
