@@ -22,6 +22,7 @@ body {
 .results {
     margin-top: 20px;
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: column;
+    justify-content: flex-start;
     height: 500px;
 }

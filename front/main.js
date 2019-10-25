@@ -42,7 +42,26 @@ let populate = (data) => {
     removeAllChildren(resultsDiv);
     data.forEach(source => {
         for (index in source) {
-            console.log(source[index])
+            let wrapper = document.createElement("div");
+            wrapper.style.border = "1px solid black";
+            wrapper.style.borderRadius = "3px";
+
+            let link = document.createElement("a");
+            link.setAttribute("href", source[index]["url"]);
+
+            let header = document.createElement("h3")
+            header.innerText = source[index]["title"];
+
+            let polarityIndicator = document.createElement("p");
+            polarityIndicator.innerText = `Polarity: ${source[index]["polarity"]}`
+
+            link.appendChild(header);
+
+            wrapper.appendChild(link);
+            wrapper.appendChild(polarityIndicator)
+            if (header.innerText) {
+                resultsDiv.appendChild(wrapper);
+            };
         };
     });
 };
