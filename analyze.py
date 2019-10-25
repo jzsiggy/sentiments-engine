@@ -30,15 +30,15 @@ def analyze_crypto_panic(keyword):
         submissions[index]["polarity"] = sentiment
     return submissions
 
-def analyze_crypto_control():
-    entries = get_crypto_control_top_news()
+def analyze_guardian(keyword):
+    entries = guardian_search(keyword)
     for index in entries:
         sentiment = get_avg_sentiment(entries[index]["title"])
         entries[index]["polarity"] = sentiment
     return entries
 
-def analyze_guardian(keyword):
-    entries = guardian_search(keyword)
+def analyze_crypto_control():
+    entries = get_crypto_control_top_news()
     for index in entries:
         sentiment = get_avg_sentiment(entries[index]["title"])
         entries[index]["polarity"] = sentiment
