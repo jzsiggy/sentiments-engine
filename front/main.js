@@ -4,7 +4,7 @@ async function getFeedFromSource(endpoint, keyword) {
     return json;
 }
 
-async function getFullFeed (keyword) {
+async function getFullFeed(keyword) {
     const sources = [
         "http://127.0.0.1:5000/reddit",
         "http://127.0.0.1:5000/guardian",
@@ -12,18 +12,16 @@ async function getFullFeed (keyword) {
         // "http://127.0.0.1:5000/crypto-panic"
     ]
     
-    const feed = []
+    let promises = []
 
-    sources.forEach(async function(source) {
-        await getFeedFromSource(source, keyword)
-        .then((redditFeed) => {
-            for (entry in redditFeed) {
-                feed.push(redditFeed[entry]);
-            };
-        });
-    })
-    return feed
-}
+    sources.forEach(async function (source) {
+        promise = getFeedFromSource(source, keyword);
+        promises.push(promise)
+    });
+
+    return Promise.all(promises)
+    .then(data => data)
+};
 
 removeAllChildren = (div) => {
     while (div.firstChild) {
@@ -33,22 +31,18 @@ removeAllChildren = (div) => {
 
 const searchBtn = document.querySelector("#search-btn");
 
-searchBtn.addEventListener("click", () => {
+searchBtn.addEventListener("click", async function() {
     const input = document.querySelector("#search");
-    console.log(input.value);
-    getFullFeed(input.value)
-    .then(data => {
-        populate(data);
-    });
+    let data = await getFullFeed(input.value)
+    populate(data);
 });
 
 let populate = (data) => {
     const resultsDiv = document.querySelector(".results")
     removeAllChildren(resultsDiv);
-    console.log(data);
-    for (entry in data) {
-        console.log(data[entry])
-        let header = document.createElement("h1").innerText = entry.title;
-        resultsDiv.appendChild(header);
-    };
+    data.forEach(source => {
+        for (index in source) {
+            console.log(source[index])
+        };
+    });
 };
